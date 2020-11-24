@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using StoreApplicationMVC.Models;
+using StoreApplication.WebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StoreApplicationMVC.Controllers
+namespace StoreApplication.WebApp.Controllers
 {
     public class HomeController : Controller
     {
