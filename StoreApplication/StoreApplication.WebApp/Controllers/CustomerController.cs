@@ -4,24 +4,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using StoreApplication.WebApp.Data;
-using StoreApplication.WebApp.Models;
+using Microsoft.EntityFrameworkCore;
+using StoreApplication.DataModel.Repositories;
 
 namespace StoreApplication.WebApp.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private CustomerRepository _customerRepo;
 
-        public CustomerController(ApplicationDbContext context)
+        public CustomerController(CustomerRepository customerRepo)
         {
-            _context = context;
+            _customerRepo = customerRepo;
         }
 
+        //GET - Customer
         public IActionResult Index()
         {
-            IEnumerable<Customer> custList = _context.Customer;
-            return View();
+            var custList = _customerRepo.GetCustomers();
+            return View(custList);
         }
 
         //GET - CREATE
@@ -30,18 +31,17 @@ namespace StoreApplication.WebApp.Controllers
             return View();
         }
 
+        //POST - CREATE
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(ClassLibrary.Models.Customer customer)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                _customerRepo.InsertCustomer(customer);
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(customer);
         }
     }
 }

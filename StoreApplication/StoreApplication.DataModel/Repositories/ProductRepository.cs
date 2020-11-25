@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StoreApplication.DataModel
+namespace StoreApplication.DataModel.Repositories
 {
-    class CustomerRepository
+    public class ProductRepository
     {
     }
 }

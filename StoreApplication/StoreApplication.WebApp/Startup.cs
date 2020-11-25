@@ -5,11 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using StoreApplication.WebApp.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using StoreApplication.DataModel;
+using StoreApplication.DataModel.Repositories;
 
 namespace StoreApplication.WebApp
 {
@@ -25,10 +26,11 @@ namespace StoreApplication.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<Project0DBContext>(options =>
             options.UseSqlServer(
-                Configuration.GetConnectionString("DefaultConnection")
-                ));
+                Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<CustomerRepository>();
 
             services.AddControllersWithViews();
         }

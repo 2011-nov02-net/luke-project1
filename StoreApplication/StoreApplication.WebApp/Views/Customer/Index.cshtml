@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StoreApplication.WebApp.Models.Customer>
+﻿@model IEnumerable<StoreApplication.ClassLibrary.Models.Customer>
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,44 +9,38 @@
             <h2 class="text-primary">Customer List</h2>
         </div>
         <div class="col-6">
-            <a asp-action="Create" asp-controller="Customer">Add a new Customer</a>
+            <a asp-action="Create" asp-controller="Customer" class="btn btn-primary">Add a new Customer</a>
         </div>
     </div>
 
     <br /><br />
 
-    @if (Model.Count() > 0)
-    {
-        <table class="table table-bordered table-striped" style="width:100%">
-            <thead>
+    
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    First Name:
+                </th>
+                <th>
+                    Last Name:
+                </th>
+                <th>
+                    Email:
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var obj in Model)
+            {
                 <tr>
-                    <th>
-                        First Name:
-                    </th>
-                    <th>
-                        Last Name:
-                    </th>
-                    <th>
-                        Email:
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach(var obj in Model)
-                {
-                <tr>
-
                     <td width="50%">@obj.FirstName</td>
                     <td width="50%">@obj.LastName</td>
                     <td width="50%">@obj.Email</td>
                 </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <p>No customer exists!</p>
-    }
+            }
+        </tbody>
+    </table>
+    
 
 </div>
