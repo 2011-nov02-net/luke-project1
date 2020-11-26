@@ -31,6 +31,9 @@ namespace StoreApplication.WebApp
                 Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<CustomerRepository>();
+            services.AddScoped<LocationRepository>();
+            services.AddScoped<OrderRepository>();
+            services.AddScoped<ProductRepository>();
 
             services.AddControllersWithViews();
         }

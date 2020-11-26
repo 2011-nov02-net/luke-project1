@@ -10,6 +10,11 @@ namespace StoreApplication.ClassLibrary.Models
         public int Quantity { get; set; }
         public Product product { get; }
 
+        public Inventory()
+        {
+
+        }
+
         public Inventory(int quantity, Product prod)
         {
             Quantity = quantity;

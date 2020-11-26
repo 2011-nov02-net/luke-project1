@@ -44,23 +44,7 @@ namespace StoreApplication.DataModel.Repositories
             return appLocations;
         }
 
-        //public List<ClassLibrary.Order> GetLocationOrders(int locationId)
-        //{
-        //    using var context = new Project0DBContext(_contextOptions);
-
-        //    var dbCustomerOrders = context.Orders.Where(o => o.LocationId == locationId).ToList();
-
-        //    var appLocationOrders = dbCustomerOrders.Select(co => new ClassLibrary.Order()
-        //    {
-        //        OrderId = co.OrderId,
-        //        CustomerId = co.CustomerId,
-        //        LocationId = co.LocationId,
-        //        OrderTime = co.OrderTime,
-        //        Quantity = co.Quantity,
-        //    }
-        //    ).ToList();
-
-        //    return appLocationOrders;
-        //}
+        
+        
     }
 }

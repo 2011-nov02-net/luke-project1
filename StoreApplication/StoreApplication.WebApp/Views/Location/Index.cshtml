@@ -1,0 +1,41 @@
+﻿@model IEnumerable<StoreApplication.ClassLibrary.Location>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Location List</h2>
+        </div>
+        <div class="col-6">
+        </div>
+    </div>
+
+    <br /><br />
+
+
+    <table class="table table-bordered table-striped" style="width:50%">
+        <thead>
+            <tr>
+                <th>
+                    Name:
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+            <tr>
+                <td width="50%">
+                    <a asp-controller="Order" asp-route-Id="@obj.LocationId" asp-action="GetByLocation" >@obj.Name</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+

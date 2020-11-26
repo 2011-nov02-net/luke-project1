@@ -11,6 +11,11 @@ namespace StoreApplication.ClassLibrary.Models
         public decimal Price { get; set; }
         public int OrderLimit { get; set; }
 
+        public Product()
+        {
+
+        }
+
         public Product(int productId, string name, decimal price, int orderLimit)
         {
             ProductId = productId;
