@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StoreApplication.DataModel.Repositories;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -22,6 +23,27 @@ namespace StoreApplication.WebApp.Models
 
         [DisplayName("Order Date")]
         public DateTime OrderDate { get; set; }
+
+        public List<OrderSale> orderSales { get; set; }
+
+        public virtual Customer Customer { get; set; }
+
+        public virtual Location Location { get; set; }
+
+        public List<ClassLibrary.Models.Customer> AllCustomers { get; set; }
+
+        public List<ClassLibrary.Location> AllLocations { get; set; }
+
+        public List<ClassLibrary.Models.Product> AllProducts { get; set; }
+
+        
+
+        public Order()
+        {
+            AllCustomers = new List<ClassLibrary.Models.Customer>();
+            AllLocations = new List<ClassLibrary.Location>();
+            AllProducts = new List<ClassLibrary.Models.Product>();
+        }
 
     }
 }

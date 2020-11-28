@@ -1,55 +1,51 @@
-﻿@model IEnumerable<StoreApplication.DataModel.Order>
+﻿@model IEnumerable<StoreApplication.DataModel.OrderSale>
+
 @{
-    ViewData["Title"] = "Orders By Location";
+    ViewData["Title"] = "Detail";
 }
 
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class="text-primary">Orders By Location</h2>
+            <h2 class="text-primary">Order List</h2>
         </div>
         <div class="col-6">
+            <a asp-action="Index" asp-controller="Order" class="btn btn-primary">All Orders</a>
         </div>
     </div>
-
-    <br /><br />
-
 
     <table class="table table-bordered table-striped" style="width:100%">
         <thead>
             <tr>
                 <th>
-                    Order ID:
+                    Order Id:
                 </th>
                 <th>
-                    Customer ID:
+                    Product Id:
                 </th>
                 <th>
-                    Location ID:
+                    Quantity:
                 </th>
                 <th>
-                    Total:
+                    Product Name:
                 </th>
                 <th>
-                    Order Date:
+                    Sale Price:
                 </th>
-
             </tr>
         </thead>
         <tbody>
             @foreach (var obj in Model)
-            {                
+            {
                 <tr>
                     <td width="50%">@obj.OrderId</td>
-                    <td width="50%">@obj.CustomerId</td>
-                    <td width="50%">@obj.LocationId</td>
-                    <td width="50%">@obj.Total</td>
-                    <td width="50%">@obj.OrderDate</td>
+                    <td width="50%">@obj.ProductId</td>
+                    <td width="50%">@obj.Quantity</td>
+                    <td width="50%">@obj.ProductName</td>
+                    <td width="50%">@obj.SalePrice</td>
                 </tr>
             }
         </tbody>
     </table>
 
-
-</div>
-
+    </div>

@@ -33,41 +33,77 @@ namespace StoreApplication.DataModel.Repositories
             return appOrders;
         }
 
-        public List<ClassLibrary.Models.Order> GetLocationOrders(int locationId)
+        public IEnumerable<Order> GetLocationOrders(int locationId)
         {    
             using var context = new Project0DBContext(_contextOptions);
 
-            var dbCustomerOrders = context.Orders.Where(o => o.LocationId == locationId).ToList();
-
-
-            var appLocationOrders = dbCustomerOrders.Select(co => new ClassLibrary.Models.Order()
-            {
-                OrderId = co.OrderId,
-                CustomerId = co.CustomerId,
-                LocationId = co.LocationId,
-                Total = co.Total,
-                OrderDate = co.OrderDate,
-            }).ToList();
-
-
-
-            return appLocationOrders;
+            return context.Orders.Where(o => o.Location.LocationId == locationId);
         }
 
-        public void InsertOrder(ClassLibrary.Models.Order order)
+        public IEnumerable<Order> GetCustomerOrders(int customerId)
+        {
+            using var context = new Project0DBContext(_contextOptions);
+
+            return context.Orders.Where(o => o.Customer.CustomerId == customerId);
+        }
+
+        public List<OrderSale> GetOrderDetail(int orderId)
+        {
+            using var context = new Project0DBContext(_contextOptions);
+
+            var dbOrderSales = context.OrderSales
+                .Include(o => o.Product)
+                .Include(o => o.Order)
+                .Where(o => o.OrderId == orderId);
+
+            var productList = new List<OrderSale>();
+            foreach (var product in dbOrderSales)
+            {
+                productList.Add(product);
+            }
+
+            return productList;
+        }
+
+        public void InsertOrder(Order order)
         {
             using var context = new Project0DBContext(_contextOptions);
 
             var dbOrder = new Order()
             {
-                OrderId = order.OrderId,
                 CustomerId = order.CustomerId,
                 LocationId = order.LocationId,
+                OrderDate = order.OrderDate,
                 Total = order.Total,
-                OrderDate = order.OrderDate
+            };
+            context.Orders.Add(dbOrder);
+
+            context.SaveChanges();
+
+            foreach (var orderSale in order.OrderSales)
+            {
+                orderSale.OrderId = dbOrder.OrderId;
+                AddProductToOrder(orderSale);
+                
+            }
+
+            context.SaveChanges();
+        }
+
+        public void AddProductToOrder(OrderSale orderSale)
+        {
+            using var context = new Project0DBContext(_contextOptions);
+
+            var newOrderSale = new OrderSale()
+            {
+                OrderId = orderSale.OrderId,
+                ProductId = orderSale.ProductId,
+                ProductName = orderSale.ProductName,
+                Quantity = orderSale.Quantity,
+                SalePrice = orderSale.SalePrice
             };
 
-            context.Orders.Add(dbOrder);
+            context.OrderSales.Add(newOrderSale);
 
             context.SaveChanges();
         }

@@ -6,10 +6,14 @@ namespace StoreApplication.ClassLibrary.Models
 {
     public class OrderSale
     {
+        public int OrderId { get; set; }
         public int ProductId { get; set; }
-        public string ProductName { get; }
-        public decimal SalePrice { get;  }
-        public int Quantity { get;  }
+        public int Quantity { get; set; }
+        public string ProductName { get; set; }
+        public decimal SalePrice { get; set; }
+
+        public virtual Order Order { get; set; }
+        public virtual Product Product { get; set; }
 
         public OrderSale()
         {

@@ -11,7 +11,7 @@ namespace StoreApplication.ClassLibrary.Models
         public int LocationId { get; set; }
         public decimal Total { get; set; }
         public DateTime OrderDate { get; set; }
-        public List<OrderSale> orderSales { get; set; }
+        public ICollection<OrderSale> orderSales { get; set; }
 
         public Order()
         {
