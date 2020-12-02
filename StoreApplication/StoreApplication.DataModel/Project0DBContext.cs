@@ -8,9 +8,6 @@ namespace StoreApplication.DataModel
 {
     public partial class Project0DBContext : DbContext
     {
-        public Project0DBContext()
-        {
-        }
 
         public Project0DBContext(DbContextOptions<Project0DBContext> options)
             : base(options)

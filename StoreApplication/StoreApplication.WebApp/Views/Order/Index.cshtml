@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StoreApplication.ClassLibrary.Models.Order>
+﻿@model List<StoreApplication.DataModel.Order>
 @{
     ViewData["Title"] = "Index";
 }
@@ -11,6 +11,13 @@
         <div class="col-6">
             <a asp-action="Create" asp-controller="Order" class="btn btn-primary">Create A New Order</a>
         </div>
+        <div class="col-6">
+            <a asp-action="ShowOrderSearchFormByLocation" asp-controller="Order" class="btn btn-success">Search By Location</a>
+        </div>
+        <div class="col-6">
+            <a asp-action="ShowOrderSearchFormByCustomer" asp-controller="Order" class="btn btn-success">Search By Customer</a>
+        </div>
+
     </div>
 
     <br /><br />
@@ -37,19 +44,20 @@
         <tbody>
             @foreach (var obj in Model)
             {
-            <tr>
+                <tr>
 
-                <td width="50%">@obj.CustomerId</td>
-                <td width="50%">@obj.LocationId</td>
-                <td width="50%">@obj.Total</td>
-                <td width="50%">@obj.OrderDate</td>
-                <td width="50%">
-                    <a asp-controller="Order" asp-route-Id="@obj.OrderId" asp-action="Detail" class="btn btn-primary">Details</a>
-                </td>
-            </tr>
+                    <td width="50%">@obj.CustomerId</td>
+                    <td width="50%">@obj.LocationId</td>
+                    <td width="50%">@obj.Total</td>
+                    <td width="50%">@obj.OrderDate</td>
+                    <td width="50%">
+                        <a asp-controller="Order" asp-route-Id="@obj.OrderId" asp-action="Detail" class="btn btn-primary">Details</a>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
+
 
 
 </div>

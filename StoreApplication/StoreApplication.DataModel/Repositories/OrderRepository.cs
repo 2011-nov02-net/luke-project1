@@ -15,13 +15,13 @@ namespace StoreApplication.DataModel.Repositories
             _contextOptions = contextOptions;
         }
 
-        public IEnumerable<ClassLibrary.Models.Order> GetOrders()
+        public List<Order> GetOrders()
         {
             using var context = new Project0DBContext(_contextOptions);
 
             var dbOrders = context.Orders.ToList();
 
-            var appOrders = dbOrders.Select(o => new ClassLibrary.Models.Order()
+            var appOrders = dbOrders.Select(o => new Order()
             {
                 OrderId = o.OrderId,
                 CustomerId = o.CustomerId,
