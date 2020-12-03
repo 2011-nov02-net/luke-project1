@@ -26,5 +26,5 @@ steps:
     version: '5.0.100'
     includePreviewVersions: true
 - script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+  displayName: 'dotnet publish'
   workingDirectory: StoreApplication/StoreApplication
