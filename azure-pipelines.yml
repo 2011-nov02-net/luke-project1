@@ -72,4 +72,4 @@ steps:
     azureSubscription: 'Azure subscription 1 (1981cd5f-5a1e-42fa-8aef-f6eb6bc717e9)'
     appType: 'webApp'
     WebAppName: 'Revature-order-app'
-    packageForLinux: 'StoreApplication/publish'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/StoreApplication/publish'
