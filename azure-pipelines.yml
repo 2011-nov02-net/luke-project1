@@ -69,24 +69,24 @@ stages:
       artifact: app
       displayName: publish artifact app
 
-- stage: release
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-  jobs:
-  - deployment: app_service
-    environment: prod
-    strategy:
-     runOnce:
-       deploy:
-         steps:
-         - download: current
-           artifact: app
-           displayName: download artifact app
+#- stage: release
+#  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+#  jobs:
+#  - deployment: app_service
+#    environment: prod
+#    strategy:
+#     runOnce:
+#       deploy:
+#         steps:
+#         - download: current
+#           artifact: app
+#           displayName: download artifact app
 
-         - task: AzureRmWebAppDeployment@4
-           displayName: azure app service deploy
-           inputs:
-             ConnectionType: 'AzureRM'
-             azureSubscription: 'Azure subscription 1 (1981cd5f-5a1e-42fa-8aef-f6eb6bc717e9)'
-             appType: 'webApp'
-             WebAppName: 'Revature-order-app'
-             packageForLinux: '$(Pipeline.Workspace)/app'
+#         - task: AzureRmWebAppDeployment@4
+#           displayName: azure app service deploy
+#           inputs:
+#             ConnectionType: 'AzureRM'
+#             azureSubscription: 'Azure subscription 1 (1981cd5f-5a1e-42fa-8aef-f6eb6bc717e9)'
+#             appType: 'webApp'
+#             WebAppName: 'Revature-order-app'
+#             packageForLinux: '$(Pipeline.Workspace)/app'
