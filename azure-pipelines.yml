@@ -20,7 +20,7 @@ stages:
       vmImage: 'ubuntu-latest'
 
     variables:
-      sdkVersion: 3.1.x
+      sdkVersion: 5.0.x
       buildConfiguration: Release
 
     steps:
