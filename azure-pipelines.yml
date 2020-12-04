@@ -90,7 +90,7 @@ stages:
             displayName: Azure App Service Deploy
             inputs:
               ConnectionType: 'AzureRM'
-              azureSubscription: 'Azure subscription 1 (1981cd5f-5a1e-42fa-8aef-f6eb6bc717e9)'
+              azureSubscription: 'Azure subscription 1(1981cd5f-5a1e-42fa-8aef-f6eb6bc717e9)'
               appType: 'webApp'
               WebAppName: 'Revature-order-app'
               packageForLinux: '$(Pipeline.Workspace)/app'
