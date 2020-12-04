@@ -64,10 +64,12 @@ stages:
         arguments: '--configuration $(buildConfiguration)'
         publishTestResults: true
         workingDirectory: StoreApplication
+    
+    - script: dotnet publish --configuration $(buildConfiguration) --output publish
+      displayName: dotnet publish
+      workingDirectory: StoreApplication
 
-    - publish: StoreApplication/publish
-      artifact: app
-      displayName: publish artifact app
+
 
 #- stage: release
 #  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
