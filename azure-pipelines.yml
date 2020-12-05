@@ -1,0 +1,97 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+ branches:
+   include:
+     - master
+ paths:
+   include:
+     - StoreApplication
+     - azure-pipelines.yml
+
+stages:
+- stage: build
+  jobs:
+  - job: build
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    variables:
+      sdkVersion: 5.0.x
+      buildConfiguration: Release
+
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk 2.x'
+      inputs:
+        packageType: 'sdk'
+        version: '2.x'
+
+    - task: SonarCloudPrepare@1
+      displayName: sonar prepare analysis
+      inputs:
+        SonarCloud: 'sonarcloud thebigfishluke'
+        organization: '2011-nov02-net'
+        scannerMode: 'MSBuild'
+        projectKey: '2011-nov02-net_luke-project1'
+        projectName: 'Project1'
+        extraProperties: 'sonar.exclusions=**/lib/**'
+
+    - task: UseDotNet@2
+      displayName: dotnet sdk $(sdkVersion)
+      inputs:
+        packageType: 'sdk'
+        version: '$(sdkVersion)'
+
+    - script: dotnet build --configuration $(buildConfiguration)
+      displayName: dotnet build
+      workingDirectory: StoreApplication
+      
+    - task: SonarCloudAnalyze@1
+      displayName: sonar run analysis
+
+    - task: SonarCloudPublish@1
+      displayName: sonar analysis publish
+      inputs:
+        pollingTimeoutSec: '300'
+    - task: DotNetCoreCLI@2
+      displayName: dotnet test
+      inputs:
+        command: test
+        arguments: '--configuration $(buildConfiguration)'
+        publishTestResults: true
+        workingDirectory: StoreApplication
+    
+    - script: dotnet publish --configuration $(buildConfiguration) --output publish
+      displayName: dotnet publish
+      workingDirectory: StoreApplication
+
+    - publish: StoreApplication/publish
+      artifact: app
+      displayName: Publish Artifact App
+    
+- stage: release
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  jobs:
+  - deployment: app_service
+    environment: production
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: app
+            displayName: download app
+
+          - task: AzureRmWebAppDeployment@4
+            displayName: Azure App Service Deploy
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'Azure subscription 1(1981cd5f-5a1e-42fa-8aef-f6eb6bc717e9)'
+              appType: 'webApp'
+              WebAppName: 'Revature-order-app'
+              packageForLinux: '$(Pipeline.Workspace)/app'
+
