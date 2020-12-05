@@ -12,6 +12,9 @@ namespace StoreApplication.ClassLibrary.Models
         public decimal Total { get; set; }
         public DateTime OrderDate { get; set; }
         public ICollection<OrderSale> orderSales { get; set; }
+        public virtual Customer Customer { get; set; }
+
+        public virtual Location Location { get; set; }
 
         public Order()
         {

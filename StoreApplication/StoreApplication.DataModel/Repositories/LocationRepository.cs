@@ -44,13 +44,13 @@ namespace StoreApplication.DataModel.Repositories
             return appLocations;
         }
 
-        public Location GetLocationByID(int locationId)
+        public ClassLibrary.Location GetLocationByID(int locationId)
         {
             using var context = new Project0DBContext(_contextOptions);
 
             var dbLocations = context.Locations.ToList();
 
-            var appLocations = dbLocations.Select(l => new Location()
+            var appLocations = dbLocations.Select(l => new ClassLibrary.Location()
             {
                 LocationId = l.LocationId,
                 Name = l.Name

@@ -32,13 +32,13 @@ namespace StoreApplication.DataModel.Repositories
             return appCustomers;
         }
 
-        public DataModel.Customer GetCustomerByName(string firstName, string lastName)
+        public ClassLibrary.Models.Customer GetCustomerByName(string firstName, string lastName)
         {
             using var context = new Project0DBContext(_contextOptions);
 
             var dbCustomers = context.Customers.ToList();
 
-            var appCustomers = dbCustomers.Select(c => new Customer()
+            var appCustomers = dbCustomers.Select(c => new ClassLibrary.Models.Customer()
             {
                 CustomerId = c.CustomerId,
                 FirstName = c.FirstName,
@@ -48,13 +48,13 @@ namespace StoreApplication.DataModel.Repositories
             return appCustomers;
         }
 
-        public DataModel.Customer GetCustomerByID(int customerId)
+        public ClassLibrary.Models.Customer GetCustomerByID(int customerId)
         {
             using var context = new Project0DBContext(_contextOptions);
 
             var dbCustomers = context.Customers.ToList();
 
-            var appCustomers = dbCustomers.Select(c => new Customer()
+            var appCustomers = dbCustomers.Select(c => new ClassLibrary.Models.Customer()
             {
                 CustomerId = c.CustomerId,
                 FirstName = c.FirstName,

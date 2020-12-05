@@ -15,7 +15,7 @@ namespace StoreApplication.DataModel.Repositories
             _contextOptions = contextOptions;
         }
 
-        public IEnumerable<ClassLibrary.Models.Product> GetProducts()
+        public List<ClassLibrary.Models.Product> GetProducts()
         {
             using var context = new Project0DBContext(_contextOptions);
 
@@ -28,6 +28,19 @@ namespace StoreApplication.DataModel.Repositories
                 Price = p.Price,
                 OrderLimit = p.OrderLimit
             }).ToList();
+
+            //var products = new List<ClassLibrary.Models.Product>();
+            //foreach(var product in appProducts)
+            //{
+            //    var addProduct = new ClassLibrary.Models.Product()
+            //    {
+            //        ProductId = product.ProductId,
+            //        Name = product.Name,
+            //        Price = product.Price,
+            //        OrderLimit = product.OrderLimit
+            //    };
+            //    products.Add(addProduct);
+            //}
 
             return appProducts;
 

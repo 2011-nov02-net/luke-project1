@@ -54,38 +54,78 @@ namespace StoreApplication.WebApp.Controllers
             {
                 newOrder.AllProducts.Add(product);
             }
-            newOrder.Total = 0;
+            newOrder.Total = (decimal)5.00;
             return View(newOrder);
         }
 
         // POST - Create a new Order
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Models.Order order)
+        public ActionResult Create(DataModel.Order order)
         {
+            using var context = new Project0DBContext(_contextOptions);
+
             if(ModelState.IsValid)
             {
-                var customerChoice = _custRepo.GetCustomerByID(order.CustomerId);
-                var locationChoice = _locRepo.GetLocationByID(order.LocationId);
-                var newOrder = new DataModel.Order();
+                //var customerChoice = _custRepo.GetCustomerByID(order.CustomerId);
+                //var locationChoice = _locRepo.GetLocationByID(order.LocationId);
+                //var newOrder = new ClassLibrary.Models.Order();
 
-                newOrder.Customer = customerChoice;
-                newOrder.Location = locationChoice;
-                newOrder.OrderDate = DateTime.Now;
-                newOrder.Total = order.Total;
+                //newOrder.Customer = customerChoice;
+                //newOrder.Location = locationChoice;
+                //newOrder.OrderDate = DateTime.Now;
+                //newOrder.Total = order.Total;
+                
 
-                _orderRepo.InsertOrder(newOrder);
+                _orderRepo.InsertOrder(order);
 
                 return RedirectToAction("Index");
             }
             return View();            
         }
 
+
+        public ActionResult AddProducts(int orderId)
+        {
+            var orderSale = new WebApp.Models.OrderSale();
+            orderSale.OrderId = orderId;
+            orderSale.Quantity += 1;
+            orderSale.SalePrice = 0;
+
+
+            var allProducts = _prodRepo.GetProducts();
+            foreach(var product in allProducts)
+            {
+                orderSale.Products.Add(product);
+            }
+
+            return View(orderSale);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddProducts(ClassLibrary.Models.OrderSale orderSale)
+        {
+            using var context = new Project0DBContext(_contextOptions);           
+
+            if(ModelState.IsValid)
+            {
+                _orderRepo.AddProductToOrder(orderSale);
+                return RedirectToAction("Detail", context.Orders.Where(o => o.OrderId == orderSale.OrderId));
+            }
+            return View();
+        }
+
        // GET - Order Detail
         public ActionResult Detail(int id)
         {
-            var orderDetail = _orderRepo.GetOrderDetail(id);
-            return View(orderDetail);
+            if(ModelState.IsValid)
+            {
+                var orderDetail = _orderRepo.GetOrderDetail(id);
+                return View(orderDetail);
+            }
+            return View("Index");
+            
         }
 
         // GET - Orders By Location
@@ -125,6 +165,30 @@ namespace StoreApplication.WebApp.Controllers
         public ActionResult ShowOrderSearchFormByCustomer()
         {
             return View();
+        }
+
+        public ActionResult Delete(int orderId)
+        {
+            var orderToDelete = _orderRepo.GetOrderById(orderId);
+            return View(orderToDelete);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteSuccess(int orderId)
+        {
+            using var context = new Project0DBContext(_contextOptions);
+
+            if(ModelState.IsValid)
+            {
+                var orderToDelete = _orderRepo.GetOrderById(orderId);
+                _orderRepo.DeleteOrder(orderToDelete);
+
+                return RedirectToAction("Index");
+            }
+            return View("Index");
+            
+
         }
 
     }

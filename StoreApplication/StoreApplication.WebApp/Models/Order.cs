@@ -24,7 +24,9 @@ namespace StoreApplication.WebApp.Models
         [DisplayName("Order Date")]
         public DateTime OrderDate { get; set; }
 
-        public List<OrderSale> orderSales { get; set; }
+        [Required]
+        [DisplayName("Products")]
+        public List<DataModel.OrderSale> orderSales { get; set; }
 
         public virtual Customer Customer { get; set; }
 

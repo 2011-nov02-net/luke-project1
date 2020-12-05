@@ -34,6 +34,7 @@ namespace StoreApplication.WebApp
             services.AddScoped<LocationRepository>();
             services.AddScoped<OrderRepository>();
             services.AddScoped<ProductRepository>();
+            services.AddScoped<Project0DBContext>();
 
             services.AddControllersWithViews();
         }
@@ -62,7 +63,7 @@ namespace StoreApplication.WebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Customer}/{action=Index}/{id?}");
             });
         }
     }
