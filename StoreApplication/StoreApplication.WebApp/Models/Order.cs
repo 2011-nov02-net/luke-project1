@@ -32,19 +32,19 @@ namespace StoreApplication.WebApp.Models
 
         public virtual Location Location { get; set; }
 
-        public List<ClassLibrary.Models.Customer> AllCustomers { get; set; }
+        public List<DataModel.Customer> AllCustomers { get; set; }
 
-        public List<ClassLibrary.Location> AllLocations { get; set; }
+        public List<DataModel.Location> AllLocations { get; set; }
 
-        public List<ClassLibrary.Models.Product> AllProducts { get; set; }
+        public List<DataModel.Product> AllProducts { get; set; }
 
         
 
         public Order()
         {
-            AllCustomers = new List<ClassLibrary.Models.Customer>();
-            AllLocations = new List<ClassLibrary.Location>();
-            AllProducts = new List<ClassLibrary.Models.Product>();
+            AllCustomers = new List<DataModel.Customer>();
+            AllLocations = new List<DataModel.Location>();
+            AllProducts = new List<DataModel.Product>();
         }
 
     }

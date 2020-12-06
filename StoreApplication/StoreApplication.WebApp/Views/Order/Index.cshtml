@@ -1,4 +1,4 @@
-﻿@model List<StoreApplication.DataModel.Order>
+﻿@model IEnumerable<StoreApplication.DataModel.Order>
 @{
     ViewData["Title"] = "Index";
 }
@@ -12,12 +12,13 @@
             <a asp-action="Create" asp-controller="Order" class="btn btn-primary">Create A New Order</a>
         </div>
         <div class="col-6">
-            <a asp-action="ShowOrderSearchFormByLocation" asp-controller="Order" class="btn btn-success">Search By Location</a>
         </div>
         <div class="col-6">
             <a asp-action="ShowOrderSearchFormByCustomer" asp-controller="Order" class="btn btn-success">Search By Customer</a>
         </div>
-
+        <div class="col-6">
+            <a asp-action="ShowOrderSearchFormByLocation" asp-controller="Order" class="btn btn-success">Search By Location</a>
+        </div>
     </div>
 
     <br /><br />

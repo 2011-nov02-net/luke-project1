@@ -37,47 +37,32 @@ namespace StoreApplication.WebApp.Controllers
         //GET - CREATE
         public ActionResult Create()
         {
-            var newOrder = new WebApp.Models.Order();
-            var allCustomers = _custRepo.GetCustomers();
-            var allLocations = _locRepo.GetLocations();
-            var allProducts = _prodRepo.GetProducts();
+            var customers = _custRepo.GetCustomers();
+            var locations = _locRepo.GetLocations();
+            var newOrder = new WebApp.Models.Order()
+            {
+                AllCustomers = customers,
+                AllLocations = locations
+            };
 
-            foreach (var customer in allCustomers)
-            {
-                newOrder.AllCustomers.Add(customer);
-            }
-            foreach (var location in allLocations)
-            {
-                newOrder.AllLocations.Add(location);
-            }
-            foreach (var product in allProducts)
-            {
-                newOrder.AllProducts.Add(product);
-            }
-            newOrder.Total = (decimal)5.00;
+            newOrder.Total = 10;
+            
             return View(newOrder);
         }
 
         // POST - Create a new Order
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(DataModel.Order order)
+        public ActionResult Create(ClassLibrary.Models.Order order)
         {
             using var context = new Project0DBContext(_contextOptions);
 
             if(ModelState.IsValid)
             {
-                //var customerChoice = _custRepo.GetCustomerByID(order.CustomerId);
-                //var locationChoice = _locRepo.GetLocationByID(order.LocationId);
-                //var newOrder = new ClassLibrary.Models.Order();
-
-                //newOrder.Customer = customerChoice;
-                //newOrder.Location = locationChoice;
-                //newOrder.OrderDate = DateTime.Now;
-                //newOrder.Total = order.Total;
-                
 
                 _orderRepo.InsertOrder(order);
+
+                var newOrderId = order.OrderId;
 
                 return RedirectToAction("Index");
             }
@@ -87,6 +72,7 @@ namespace StoreApplication.WebApp.Controllers
 
         public ActionResult AddProducts(int orderId)
         {
+            var products = _prodRepo.GetProducts();
             var orderSale = new WebApp.Models.OrderSale();
             orderSale.OrderId = orderId;
             orderSale.Quantity += 1;
@@ -104,7 +90,7 @@ namespace StoreApplication.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddProducts(ClassLibrary.Models.OrderSale orderSale)
+        public ActionResult AddProducts(DataModel.OrderSale orderSale)
         {
             using var context = new Project0DBContext(_contextOptions);           
 
@@ -155,11 +141,11 @@ namespace StoreApplication.WebApp.Controllers
             return View("Index",  context.Orders.Where(o => o.Location.Name.Contains(searchPhrase)).ToList());
         }
 
-        public ActionResult ShowOrderSearchResultByCustomer(string searchPhrase)
+        public ActionResult ShowOrderSearchResultByCustomer(string searchPhrase, string searchPhrase2)
         {
             using var context = new Project0DBContext(_contextOptions);
 
-            return View("Index", context.Orders.Where(o => o.Customer.FirstName.Contains(searchPhrase) || o.Customer.LastName.Contains(searchPhrase)).ToList());
+            return View("Index", context.Orders.Where(o => o.Customer.FirstName.Contains(searchPhrase) && o.Customer.LastName.Contains(searchPhrase2)).ToList());
         }
 
         public ActionResult ShowOrderSearchFormByCustomer()

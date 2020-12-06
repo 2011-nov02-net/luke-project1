@@ -15,13 +15,13 @@ namespace StoreApplication.DataModel.Repositories
             _contextOptions = contextOptions;
         }
 
-        public List<ClassLibrary.Models.Product> GetProducts()
+        public List<Product> GetProducts()
         {
             using var context = new Project0DBContext(_contextOptions);
 
             var dbProducts = context.Products.ToList();
 
-            var appProducts = dbProducts.Select(p => new ClassLibrary.Models.Product()
+            var appProducts = dbProducts.Select(p => new Product()
             {
                 ProductId = p.ProductId,
                 Name = p.Name,

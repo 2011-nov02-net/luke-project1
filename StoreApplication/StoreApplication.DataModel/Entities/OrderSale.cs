@@ -12,6 +12,7 @@ namespace StoreApplication.DataModel
         public int Quantity { get; set; }
         public string ProductName { get; set; }
         public decimal SalePrice { get; set; }
+        public List<DataModel.Product> Products { get; set; }
 
         public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }

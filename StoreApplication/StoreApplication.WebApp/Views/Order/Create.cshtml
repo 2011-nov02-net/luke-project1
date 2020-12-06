@@ -7,22 +7,24 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label for="CustomerId" class="control-label">Choose Customer:</label>
-                <select asp-for="CustomerId" class="form-control" id="CustomerId">
+                <label for="CustomerId">Customer Name:</label>
+                <select id="CustomerId" asp-for="CustomerId" class="form-control">
                     @foreach (var customer in Model.AllCustomers)
                     {
-                        <option value="@customer.CustomerId">@customer.FirstName @customer.LastName</option>
+                        <option value=@customer.CustomerId>@customer.FirstName @customer.LastName</option>
                     }
+
                 </select>
                 <span asp-validation-for="CustomerId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LocationId" class="control-label">Choose Location:</label>
-                <select asp-for="LocationId" class="form-control" id="LocationId">
+                <label for="LocationId">Location Name:</label>
+                <select id="LocationId" asp-for="LocationId" class="form-control">
                     @foreach (var location in Model.AllLocations)
                     {
-                        <option value="@location.LocationId">@location.Name</option>
+                        <option value=@location.LocationId>@location.Name</option>
                     }
+
                 </select>
                 <span asp-validation-for="LocationId" class="text-danger"></span>
             </div>
@@ -42,6 +44,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

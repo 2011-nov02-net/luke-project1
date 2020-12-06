@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using StoreApplication.DataModel.Repositories;
+using StoreApplication.DataModel;
 
 namespace StoreApplication.WebApp.Controllers
 {
     public class CustomerController : Controller
     {
         private CustomerRepository _customerRepo;
+        private readonly DbContextOptions<Project0DBContext> _contextOptions;
 
-        public CustomerController(CustomerRepository customerRepo)
+        public CustomerController(DbContextOptions<Project0DBContext> context)
         {
-            _customerRepo = customerRepo;
+            _customerRepo = new CustomerRepository(context);
+            _contextOptions = context;
         }
 
         //GET - Customer
@@ -43,5 +46,18 @@ namespace StoreApplication.WebApp.Controllers
             }
             return View(customer);
         }
+
+        public ActionResult SearchByNameForm()
+        {
+            return View();
+        }
+
+        public ActionResult SearchByNameResult(string SearchPhrase, string SearchPhrase2)
+        {
+            using var context = new Project0DBContext(_contextOptions);
+
+            return View("Index", context.Customers.Where(c => c.FirstName.Contains(SearchPhrase) && c.LastName.Contains(SearchPhrase2)).ToList());
+        }
+
     }
 }

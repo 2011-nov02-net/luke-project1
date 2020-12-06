@@ -13,12 +13,12 @@ namespace StoreApplication.WebApp.Models
         public decimal SalePrice { get; set; }
 
         public virtual Order Order { get; set; }
-        public List<ClassLibrary.Models.Product> Products{ get; set; }
+        public List<DataModel.Product> Products{ get; set; }
 
 
         public OrderSale()
         {
-            Products = new List<ClassLibrary.Models.Product>();
+            Products = new List<DataModel.Product>();
         }
 
         public OrderSale(int orderId, string productName, int salePrice, int quantity)
@@ -27,7 +27,7 @@ namespace StoreApplication.WebApp.Models
             ProductName = productName;
             SalePrice = salePrice;
             Quantity = quantity;
-            Products = new List<ClassLibrary.Models.Product>();
+            Products = new List<DataModel.Product>();
         }
     }
 }

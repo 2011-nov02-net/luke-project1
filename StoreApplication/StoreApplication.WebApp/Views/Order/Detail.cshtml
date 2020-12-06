@@ -1,43 +1,67 @@
-﻿@model StoreApplication.ClassLibrary.Models.OrderSale
+﻿@model StoreApplication.ClassLibrary.Models.Order
 
 <div>
-    <h4>OrderSale</h4>
+    <h4>Order</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.OrderId)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.OrderId)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductId)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerId)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductId)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CustomerId)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantity)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LocationId)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Quantity)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LocationId)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductName)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Total)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductName)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Total)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SalePrice)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderDate)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SalePrice)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OrderDate)
         </dd>
     </dl>
+    @*<table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Product Name:
+                </th>
+                <th>
+                    Quantity:
+                </th>
+                <th>
+                    Price:
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model.orderSales)
+            {
+                <tr>
+                    <td width="50%">@obj.Product.Name</td>
+                    <td width="50%">@obj.Quantity</td>
+                    <td width="50%">@obj.SalePrice</td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a> |
-    <a asp-action="AddProducts">Add Products</a>
+    <a asp-action="Index">Back to List</a>
 </div>

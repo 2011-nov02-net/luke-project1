@@ -14,13 +14,13 @@ namespace StoreApplication.DataModel.Repositories
             _contextOptions = contextOptions;
         }
 
-        public IEnumerable<ClassLibrary.Models.Customer> GetCustomers()
+        public List<Customer> GetCustomers()
         {
             using var context = new Project0DBContext(_contextOptions);
 
             var dbCustomers = context.Customers.ToList();
 
-            var appCustomers = dbCustomers.Select(c => new ClassLibrary.Models.Customer()
+            var appCustomers = dbCustomers.Select(c => new Customer()
             {
                 CustomerId = c.CustomerId,
                 FirstName = c.FirstName,

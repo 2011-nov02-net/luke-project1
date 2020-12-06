@@ -21,13 +21,13 @@ namespace StoreApplication.ClassLibrary.Models
 
         }
 
-        public Order(int orderId, int customerId, int locationId, decimal total, DateTime orderDate)
+        public Order(int orderId, int customerId, int locationId, decimal total)
         {
             OrderId = orderId;
             CustomerId = customerId;
             LocationId = locationId;
             Total = total;
-            OrderDate = orderDate;
+            OrderDate = DateTime.Now;
         }
 
         public Order(int orderId, int customerId, int locationId, decimal total, DateTime orderDate, List<OrderSale> orderSale)

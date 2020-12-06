@@ -31,6 +31,9 @@
                 <td width="50%">
                     @obj.Name
                 </td>
+                <td width="50%">
+                    <a asp-action="GetByLocation" asp-route-id="@obj.LocationId" asp-controller="Order" class="btn btn-success">Orders</a>
+                </td>                
             </tr>
             }
         </tbody>

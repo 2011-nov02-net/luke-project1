@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StoreApplication.ClassLibrary.Models.Customer>
+﻿@model IEnumerable<StoreApplication.DataModel.Customer>
 @{
     ViewData["Title"] = "Index";
 }
@@ -10,6 +10,9 @@
         </div>
         <div class="col-6">
             <a asp-action="Create" asp-controller="Customer" class="btn btn-primary">Add a new Customer</a>
+        </div>
+        <div class="col-6">
+            <a asp-action="SearchByNameForm" asp-controller="Customer" class="btn btn-primary">Search By Name</a>
         </div>
     </div>
 
