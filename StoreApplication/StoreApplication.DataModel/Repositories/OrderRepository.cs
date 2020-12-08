@@ -37,82 +37,47 @@ namespace StoreApplication.DataModel.Repositories
             return appOrders;
         }
 
-        public ClassLibrary.Models.Order GetOrderById(int orderId)
-        {
-            using var context = new Project0DBContext(_contextOptions);
-
-            var dbOrder = context.Orders.ToList();
-
-            var appOrder = dbOrder.Select(o => new ClassLibrary.Models.Order()
-            {
-                OrderId = o.OrderId,
-                CustomerId = o.CustomerId,
-                LocationId = o.LocationId,
-                OrderDate = o.OrderDate,
-                Total = o.Total
-            }).Where(o => o.OrderId == orderId).FirstOrDefault();
-
-            return appOrder;
-        }
-
-        public IEnumerable<DataModel.Order> GetLocationOrders(int locationId)
-        {    
-            using var context = new Project0DBContext(_contextOptions);
-
-            var dbOrders = context.Orders.Include(o => o.Customer).Include(o => o.Location)
-                .Where(o => o.LocationId == locationId);
-
-            var appOrders = new List<DataModel.Order>();
-
-            foreach (var order in dbOrders)
-            {
-                appOrders.Add(order);
-            }
-
-            return appOrders;
-        }
-
-        public IEnumerable<ClassLibrary.Models.Order> GetCustomerOrders(int customerId)
-        {
-            using var context = new Project0DBContext(_contextOptions);
-
-            var dbOrders = context.Orders.ToList();
-
-            var appOrders = dbOrders.Select(o => new ClassLibrary.Models.Order()
-            {
-                OrderId = o.OrderId,
-                CustomerId = o.CustomerId,
-                LocationId = o.LocationId,
-                Total = o.Total,
-                OrderDate = o.OrderDate,
-            }).Where(o => o.CustomerId == customerId).ToList();
-
-            return appOrders;
-
-        }
-
-        public ClassLibrary.Models.Order GetOrderDetail(int orderId)
+        public Order GetOrderById(int orderId)
         {
             using var context = new Project0DBContext(_contextOptions);
 
             var dbOrder = context.Orders.Where(o => o.OrderId == orderId).First();
 
-            var appOrder =  new ClassLibrary.Models.Order()
+            return dbOrder;
+        }
+
+        public OrderSale GetOrderSaleById(int id)
+        {
+            using var context = new Project0DBContext(_contextOptions);
+
+            var dbOrderSale = context.OrderSales.ToList();
+
+            var appOrderSale = dbOrderSale.Select(o => new OrderSale()
             {
-                OrderId = dbOrder.OrderId,
-                CustomerId = dbOrder.CustomerId,
-                LocationId = dbOrder.LocationId,
-                OrderDate = dbOrder.OrderDate,
-                Total = dbOrder.Total
-            };
+                OrderId = o.OrderId,
+                ProductId = o.ProductId,
+                ProductName = o.ProductName,
+                Quantity = o.Quantity,
+                SalePrice = o.SalePrice
+            }).Where(p => p.ProductId == id).FirstOrDefault();
 
-            //var orderSales = GetOrderProducts(appOrder);
-            //foreach (var product in orderSales)
-            //{
-            //    appOrder.orderSales.Add(product);
-            //}
+            return appOrderSale;
+        }
 
-            return appOrder;
+        public List<OrderSale> GetOrderDetail(int orderId)
+        {
+            using var context = new Project0DBContext(_contextOptions);
+
+            var dbOrder = context.OrderSales.Include(o => o.Order).Include(o => o.Product).Where(o => o.OrderId == orderId);
+
+            var allProducts = new List<OrderSale>();
+
+            foreach (var product in dbOrder)
+            {
+                allProducts.Add(product);
+            }
+
+            return allProducts;
         }
 
         public List<ClassLibrary.Models.OrderSale> GetOrderProducts(ClassLibrary.Models.Order order)
@@ -125,14 +90,14 @@ namespace StoreApplication.DataModel.Repositories
 
             foreach(var item in dbOrderSales)
             {
-                var orderSale = new DataModel.Product()
+                var orderSale = new Product()
                 {
                     ProductId = item.Product.ProductId,
                     Name = item.Product.Name,
                     Price = item.Product.Price,
                 };
 
-                var newOrderSale = new ClassLibrary.Models.OrderSale(item.ProductId, item.ProductName, item.SalePrice, item.Quantity);
+                var newOrderSale = new ClassLibrary.Models.OrderSale(item.OrderId, item.ProductName, item.SalePrice, item.Quantity);
 
                 newOrderSale.ProductId = orderSale.ProductId;
                 appOrderSales.Add(newOrderSale);
@@ -157,17 +122,40 @@ namespace StoreApplication.DataModel.Repositories
 
             context.SaveChanges();
 
+            foreach(var orderSale in dbOrder.OrderSales)
+            {
+                orderSale.OrderId = dbOrder.OrderId;
+            }
+
+            context.SaveChanges();
+
             
         }
 
-        public void AddProductToOrder(OrderSale orderSale)
+        public Order CreateAndReturnOrder(ClassLibrary.Models.Order order)
+        {
+            using var context = new Project0DBContext(_contextOptions);
+            var dbOrder = new Order()
+            {
+                CustomerId = order.CustomerId,
+                LocationId = order.LocationId,
+                OrderDate = order.OrderDate,
+                Total = order.Total
+            };
+            context.Orders.Add(dbOrder);
+            context.SaveChanges();
+            
+            return GetOrderById(dbOrder.OrderId);
+        }
+    
+
+        public void AddProductToOrder(ClassLibrary.Models.OrderSale orderSale)
         {
             using var context = new Project0DBContext(_contextOptions);
 
 
             var newOrderSale = new OrderSale()
             {
-                OrderId = orderSale.OrderId,
                 ProductId = orderSale.ProductId,
                 ProductName = orderSale.ProductName,
                 Quantity = orderSale.Quantity,
@@ -175,6 +163,17 @@ namespace StoreApplication.DataModel.Repositories
             };
 
             context.OrderSales.Add(newOrderSale);
+
+            context.SaveChanges();
+        }
+
+        public void UpdateOrder(Order order)
+        {
+            using var context = new Project0DBContext(_contextOptions);
+
+            var dbOrder = context.Orders.Where(o => o.OrderId == order.OrderId).FirstOrDefault();
+
+            dbOrder.Total = order.Total;
 
             context.SaveChanges();
         }
@@ -190,6 +189,8 @@ namespace StoreApplication.DataModel.Repositories
             context.SaveChanges();
 
         }
+
+        
     }
 
 }

@@ -4,22 +4,20 @@ using System.Text;
 
 namespace StoreApplication.ClassLibrary.Models
 {
-    public class Inventory
+    public class StoreInventory
     {
         public int LocationId { get; set; }
         public int ProductId { get; set; }
         public int Quantity { get; set; }
-        public Product product { get; }
 
-        public Inventory()
+        public Location Location { get; set; }
+        public Product Product { get; set; }
+
+        public StoreInventory(int locationId, int productId, int quantity)
         {
-
-        }
-
-        public Inventory(int quantity, Product prod)
-        {
+            LocationId = locationId;
+            ProductId = productId;
             Quantity = quantity;
-            product = prod;
         }
     }
 }

@@ -46,6 +46,7 @@ namespace StoreApplication.WebApp.Controllers
             };
 
             newOrder.Total = 10;
+
             
             return View(newOrder);
         }
@@ -59,29 +60,26 @@ namespace StoreApplication.WebApp.Controllers
 
             if(ModelState.IsValid)
             {
-
-                _orderRepo.InsertOrder(order);
-
-                var newOrderId = order.OrderId;
-
-                return RedirectToAction("Index");
+                var createOrder = _orderRepo.CreateAndReturnOrder(order);
+                return RedirectToAction(nameof(Detail), new { id = createOrder.OrderId });
             }
-            return View();            
+            return View("Index");            
         }
-
 
         public ActionResult AddProducts(int orderId)
         {
-            var products = _prodRepo.GetProducts();
-            var orderSale = new WebApp.Models.OrderSale();
-            orderSale.OrderId = orderId;
-            orderSale.Quantity += 1;
-            orderSale.SalePrice = 0;
-
-
-            var allProducts = _prodRepo.GetProducts();
-            foreach(var product in allProducts)
+            var orderSale = new WebApp.Models.OrderSale
             {
+                Quantity = 1,
+            };
+
+            orderSale.OrderId = orderId;
+
+            var products = _prodRepo.GetProducts();
+
+            foreach(var product in products)
+            {
+                
                 orderSale.Products.Add(product);
             }
 
@@ -90,14 +88,54 @@ namespace StoreApplication.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddProducts(DataModel.OrderSale orderSale)
-        {
-            using var context = new Project0DBContext(_contextOptions);           
+        public ActionResult AddProducts(WebApp.Models.OrderSale orderSale)
+        { 
 
             if(ModelState.IsValid)
             {
-                _orderRepo.AddProductToOrder(orderSale);
-                return RedirectToAction("Detail", context.Orders.Where(o => o.OrderId == orderSale.OrderId));
+                var order = _orderRepo.GetOrderById(orderSale.OrderId);
+
+                var inventory = _locRepo.GetInventory(order.LocationId);
+
+                var product = inventory.Find(p => p.ProductId == orderSale.ProductId);
+
+                if (product.Quantity - orderSale.Quantity < 0)
+                {
+                    return RedirectToAction(nameof(Detail), new { OrderId = orderSale.OrderId });
+                }
+                else
+                {
+                    bool isInOrder = order.OrderSales.Any(p => p.Product.ProductId == product.ProductId);
+
+                    var totalPrice = product.Product.Price * orderSale.Quantity;
+
+                    if (isInOrder)
+                    {
+                        foreach (var prod in order.OrderSales)
+                        {
+                            if (prod.Product.ProductId == orderSale.ProductId)
+                            {
+                                var currentOrder = _orderRepo.GetOrderSaleById(prod.ProductId);
+                                currentOrder.Quantity += orderSale.Quantity;
+                                currentOrder.SalePrice = (decimal)totalPrice;
+                                order.Total = (decimal)totalPrice;
+
+                            }
+                        };
+                    }
+                    else
+                    {
+                        var newOrderSale = new ClassLibrary.Models.OrderSale(orderSale.ProductId, orderSale.ProductName, (decimal)totalPrice, orderSale.Quantity);
+                        order.Total += (decimal)totalPrice;
+                        _orderRepo.AddProductToOrder(newOrderSale);
+                        _orderRepo.UpdateOrder(order);
+                    }
+                    product.Quantity -= orderSale.Quantity;
+                    return RedirectToAction(nameof(AddProducts), new { id = order.OrderId });
+                }
+                
+
+                
             }
             return View();
         }
@@ -112,21 +150,6 @@ namespace StoreApplication.WebApp.Controllers
             }
             return View("Index");
             
-        }
-
-        // GET - Orders By Location
-        public ActionResult GetByLocation(int locationId)
-        {
-            var locOrderList = _orderRepo.GetLocationOrders(locationId);
-            return View(locOrderList);
-        }
-
-        // GET - Orders By Customer
-        public ActionResult GetByCustomer(int customerId)
-        {
-            var custOrderList = _orderRepo.GetCustomerOrders(customerId);
-            return View(custOrderList);
-
         }
 
         public ActionResult ShowOrderSearchFormByLocation()
@@ -168,7 +191,6 @@ namespace StoreApplication.WebApp.Controllers
             if(ModelState.IsValid)
             {
                 var orderToDelete = _orderRepo.GetOrderById(orderId);
-                _orderRepo.DeleteOrder(orderToDelete);
 
                 return RedirectToAction("Index");
             }

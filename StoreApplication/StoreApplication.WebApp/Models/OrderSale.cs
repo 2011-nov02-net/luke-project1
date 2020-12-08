@@ -8,6 +8,7 @@ namespace StoreApplication.WebApp.Models
     public class OrderSale
     {
         public int OrderId { get; set; }
+        public int ProductId { get; set; }
         public int Quantity { get; set; }
         public string ProductName { get; set; }
         public decimal SalePrice { get; set; }
@@ -21,9 +22,10 @@ namespace StoreApplication.WebApp.Models
             Products = new List<DataModel.Product>();
         }
 
-        public OrderSale(int orderId, string productName, int salePrice, int quantity)
+        public OrderSale(int orderId, int productId, string productName, int salePrice, int quantity)
         {
-            OrderId = orderId; 
+            OrderId = orderId;
+            ProductId = productId;
             ProductName = productName;
             SalePrice = salePrice;
             Quantity = quantity;

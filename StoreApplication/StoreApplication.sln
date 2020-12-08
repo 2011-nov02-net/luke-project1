@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreApplication.WebApp", "StoreApplication.WebApp\StoreApplication.WebApp.csproj", "{B2AD25D4-0C31-4E6E-B1D7-2566F0357BBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreApplication.DataModel", "StoreApplication.DataModel\StoreApplication.DataModel.csproj", "{ABDDB6D0-4789-46D4-926B-B1CC8BFEDB42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreApplication.DataModel", "StoreApplication.DataModel\StoreApplication.DataModel.csproj", "{ABDDB6D0-4789-46D4-926B-B1CC8BFEDB42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreApplication.ClassLibrary", "StoreApplication.ClassLibrary\StoreApplication.ClassLibrary.csproj", "{04D311F3-EDF0-4402-ADDC-F897AFF77CC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreApplication.ClassLibrary", "StoreApplication.ClassLibrary\StoreApplication.ClassLibrary.csproj", "{04D311F3-EDF0-4402-ADDC-F897AFF77CC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreApplication.Tests", "StoreApplication.Tests\StoreApplication.Tests.csproj", "{B46034FD-D58D-48E1-AB22-413E1ED51883}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{04D311F3-EDF0-4402-ADDC-F897AFF77CC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04D311F3-EDF0-4402-ADDC-F897AFF77CC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04D311F3-EDF0-4402-ADDC-F897AFF77CC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B46034FD-D58D-48E1-AB22-413E1ED51883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B46034FD-D58D-48E1-AB22-413E1ED51883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B46034FD-D58D-48E1-AB22-413E1ED51883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B46034FD-D58D-48E1-AB22-413E1ED51883}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

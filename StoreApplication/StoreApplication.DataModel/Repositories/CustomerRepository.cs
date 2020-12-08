@@ -48,13 +48,13 @@ namespace StoreApplication.DataModel.Repositories
             return appCustomers;
         }
 
-        public ClassLibrary.Models.Customer GetCustomerByID(int customerId)
+        public Customer GetCustomerByID(int customerId)
         {
             using var context = new Project0DBContext(_contextOptions);
 
             var dbCustomers = context.Customers.ToList();
 
-            var appCustomers = dbCustomers.Select(c => new ClassLibrary.Models.Customer()
+            var appCustomers = dbCustomers.Select(c => new Customer()
             {
                 CustomerId = c.CustomerId,
                 FirstName = c.FirstName,

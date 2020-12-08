@@ -52,10 +52,10 @@
                 <td width="50%">@obj.Total</td>
                 <td width="50%">@obj.OrderDate</td>
                 <td width="50%">
-                    <a asp-controller="Order" asp-route-Id="@obj.OrderId" asp-action="Detail" class="btn btn-primary">Details</a>
+                    @Html.ActionLink("Detail", "Detail", new { id = obj.OrderId })
                 </td>
                 <td width="50%">
-                    <a asp-controller="Order" asp-route-Id="@obj.OrderId" asp-action="AddProducts" class="btn btn-primary">Add Product</a>
+                    @Html.ActionLink("Add a Product", "AddProducts", new { id = obj.OrderId })
                 </td>
             </tr>
             }

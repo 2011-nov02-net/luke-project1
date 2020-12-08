@@ -13,19 +13,21 @@ namespace StoreApplication.ClassLibrary.Models
         public decimal SalePrice { get; set; }
 
         public virtual Order Order { get; set; }
-        public virtual Product Product { get; set; }
+        public Product Product { get; set; }
+        public List<Product> Products { get; set; }
 
         public OrderSale()
         {
-
+            Products = new List<Product>();
         }
 
-        public OrderSale(int productId, string productName, decimal salePrice, int quantity)
+        public OrderSale(int orderId, string productName, decimal salePrice, int quantity)
         {
-            ProductId = productId;
+            ProductId = orderId;
             ProductName = productName;
             SalePrice = salePrice;
             Quantity = quantity;
+            Products = new List<Product>();
         }
     }
 

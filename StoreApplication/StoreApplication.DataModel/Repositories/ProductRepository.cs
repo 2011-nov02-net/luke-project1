@@ -45,5 +45,23 @@ namespace StoreApplication.DataModel.Repositories
             return appProducts;
 
         }
+
+        public DataModel.Product GetProductById(int productId)
+        {
+            using var context = new Project0DBContext(_contextOptions);
+
+            var dbOrder = context.Products.ToList();
+
+            var appOrder = dbOrder.Select(p => new Product()
+            {
+                ProductId = p.ProductId,
+                Name = p.Name,
+                Price = p.Price,
+                OrderLimit = p.OrderLimit
+                
+            }).Where(p => p.ProductId == productId).FirstOrDefault();
+
+            return appOrder;
+        }
     }
 }
