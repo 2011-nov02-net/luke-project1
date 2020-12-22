@@ -26,6 +26,6 @@ To-Do's
 - Include and authentication system
 
 Getting Started
-git clone https://github.com/2011-nov02-net/luke-project1
+- git clone https://github.com/2011-nov02-net/luke-project1
 
 
