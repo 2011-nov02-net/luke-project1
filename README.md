@@ -18,3 +18,14 @@ Functionality
 - Customers can find location by name
 - Admins can find both customers and locations by name
 - Admins can add new products
+
+To-Do's
+- Be able to add products to an order
+- Be able to keep track of location inventory when an order is placed
+- Calculate a total price of an order
+- Include and authentication system
+
+Getting Started
+git clone https://github.com/2011-nov02-net/luke-project1
+
+
