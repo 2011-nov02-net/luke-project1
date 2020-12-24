@@ -1,6 +1,6 @@
 Store Web Application
 
-For this project, I was tasked to build an ASP.NET core web application that allows Users to be able to view and order products. All orders can then be displayed by a location name or by a customer name. Administrators can then add in new products to a location.
+For this project, I was tasked to build an ASP.NET core store web application that allows Users to be able to view and order products. All orders can then be displayed by a location name or by a customer name. Administrators can then add in new products to a location.
 
 Technologies User:
 - ASP.NET Core 5.0
@@ -27,5 +27,11 @@ To-Do's
 
 Getting Started
 - git clone https://github.com/2011-nov02-net/luke-project1
+- User the database ".sql" file in the repo in order to seed the database
+- Make sure you have the correct connection string in your appsettings.json or usersecrets
+- Rum this in either Visual Studio or Visual Studio Code
+
+License
+- This project uses the following license: MIT.
 
 
