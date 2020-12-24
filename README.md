@@ -1,8 +1,8 @@
-#Store Web Application
+Store Web Application
 
 For this project, I was tasked to build an ASP.NET core store web application that allows Users to be able to view and order products. All orders can then be displayed by a location name or by a customer name. Administrators can then add in new products to a location.
 
-##Technologies User:
+Technologies User:
 - ASP.NET Core 5.0
 - Entity Framework Core 5.0
 - SQL Server
@@ -13,25 +13,25 @@ For this project, I was tasked to build an ASP.NET core store web application th
 - Azure DevOps pipeline
 - Bootstrap
 
-##Functionality
+Functionality
 - Customers can display products, locations, and orders
 - Customers can find location by name
 - Admins can find both customers and locations by name
 - Admins can add new products
 
-##To-Do's
+To-Do's
 - Be able to add products to an order
 - Be able to keep track of location inventory when an order is placed
 - Calculate a total price of an order
 - Include and authentication system
 
-##Getting Started
+Getting Started
 - git clone https://github.com/2011-nov02-net/luke-project1
 - User the database ".sql" file in the repo in order to seed the database
 - Make sure you have the correct connection string in your appsettings.json or usersecrets
 - Rum this in either Visual Studio or Visual Studio Code
 
-##License
+License
 - This project uses the following license: MIT.
 
 
