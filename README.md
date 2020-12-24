@@ -28,9 +28,9 @@ For this project, I was tasked to build an ASP.NET core store web application th
 ## Getting Started
 - git clone https://github.com/2011-nov02-net/luke-project1
 - User the database ".sql" file in the repo in order create the tables
-- you will have to make your own sql to handle the inserts
+- you will have to make your own sql file to handle the inserts
 - Make sure you have the correct connection string in your appsettings.json or usersecrets
-- Rum this in either Visual Studio or Visual Studio Code
+- Run this in either Visual Studio or Visual Studio Code
 
 ## License
 - This project uses the following license: MIT.
